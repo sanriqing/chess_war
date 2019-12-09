@@ -1,0 +1,47 @@
+{
+  "name": "war-chess",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/copy-webpack-plugin": "^5.0.0",
+    "@types/file-loader": "^4.2.0",
+    "@types/http-server": "^0.10.0",
+    "cocos_plist_to_pixi_json": "^1.0.5",
+    "copy-webpack-plugin": "^5.0.5",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "http-server": "^0.11.1",
+    "ts-loader": "^6.2.1",
+    "tslint": "^5.20.1",
+    "tslint-config-alloy": "^0.2.1",
+    "typescript": "^3.7.2",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@types/gsap": "^1.20.2",
+    "@types/lodash": "^4.14.147",
+    "@types/pixi.js": "^5.0.0",
+    "gsap": "^3.0.1",
+    "lodash": "^4.17.15",
+    "pixi-scrollbox": "^2.1.2",
+    "pixi-sound": "^3.0.4",
+    "pixi-viewport": "^4.4.1",
+    "pixi.js": "^5.2.0",
+    "pixi_sprite_generator": "^1.0.2"
+  },
+  "scripts": {
+    "start": "env=DEV webpack-dev-server --config ./build/development.config.js",
+    "dev": "env=DEV & webpack-dev-server --config ./build/development.config.js",
+    "build": "rm -rf ./dist & webpack --config ./build/production.config.js",
+    "wasm": "hs ./src/wasm -g --cors=* -c-1 -o",
+    "code:check": "tslint ./src/**/*.ts",
+    "code:fix": "tslint ./src/**.ts --fix",
+    "plist": "node ./build/plistHandler",
+    "sprite": "node ./build/spriteCreate"
+  }
+}

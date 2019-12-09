@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>fish</title>
+
+  <script>
+
+    var wasm_fish = {
+      onRuntimeInitialized: function () {
+        console.log('wasm_fish load complete');
+        onWasmLoaded();
+      }
+      ,
+      'TOTAL_MEMORY':1024 * 64 * 1024 //64M 必须是 64K 的倍数
+    };
+
+    function onWasmLoaded() {
+     
+      var ptr = wasm_fish._init(1136, 640);
+
+      var maxActorSize = wasm_fish._getMaxActorSize();
+      var attributeCount = wasm_fish._getAttributeCount();
+
+      var memoryBuffer = wasm_fish['HEAPU8'];
+      var addInfos = new Int32Array(memoryBuffer.buffer, memoryBuffer.byteOffset + wasm_fish._getAddPtr(), maxActorSize + 1);
+      var delInfos = new Int32Array(memoryBuffer.buffer, memoryBuffer.byteOffset + wasm_fish._getDelPtr(), maxActorSize + 1);
+      var aliveInfos = new Float64Array(memoryBuffer.buffer, memoryBuffer.byteOffset + ptr, maxActorSize * attributeCount);
+     
+      //示例
+      for (var n = 0; n < 60; n++){ //60帧
+         console.log('' + n);
+        wasm_fish._update();
+
+        //del
+        var delCount = delInfos[0];
+        for (var delIdx = 1; delIdx <= delCount; delIdx++){
+            var delId = delInfos[delIdx];
+            //...
+        }
+
+        //add
+        var addCount = addInfos[0];
+        for (var addIdx = 1; addIdx <= addCount; addIdx++){
+            var addId = addInfos[addIdx];
+            //...
+        }
+       
+        //alive
+        var valueIdx = 0;
+        var aliveCount = wasm_fish._getActorCount();
+        for (var aliveIdx = 0; aliveIdx < aliveCount; aliveIdx++) {
+            for (var attributeIdx = 0; attributeIdx < attributeCount; attributeIdx++){
+                var attributeValue = aliveInfos[valueIdx++];
+                if (attributeIdx === 4 || attributeIdx === 5)
+                console.log(aliveIdx, attributeIdx, attributeValue);
+                //...
+
+                
+            }
+        }
+      }
+    }
+
+  </script>
+
+  <script type="text/javascript" src="wasm_fish.js"></script>
+
+  </body>
+
+</html>

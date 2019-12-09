@@ -1,0 +1,21 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-config-alloy"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-implicit-dependencies": [
+            true,
+            [
+                "~"
+            ]
+        ],
+        "no-redundant-jsdoc": false,
+        "no-non-null-assertion": false,
+        "no-parameter-properties": false,
+        "no-magic-numbers": false
+    },
+    "rulesDirectory": []
+}
