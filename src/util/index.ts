@@ -1,6 +1,4 @@
-import { TweenLite } from 'gsap';
-import { ExistModule } from '~/constants';
-
+import { IS_DEV } from '~/constants/index';
 /**
  *
  * 沉睡一段时间
@@ -24,6 +22,12 @@ export function sleep(time = 1000) {
 export async function sleepAndThrowError(error = new Error('time out'), time = 3000) {
     await sleep(time);
     throw error;
+}
+
+export function warn(...args: any[]) {
+    if (!IS_DEV) {
+        console.warn('【 warning 】', ...args);
+    }
 }
 
 export function noop(...args: any[]) { }
